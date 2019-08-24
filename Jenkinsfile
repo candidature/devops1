@@ -2,7 +2,7 @@ pipeline {
   agent any
   options {
     buildDiscarder(logRotator(numToKeepStr: '5'))
-    disableConcurrentBuilds()
+    //disableConcurrentBuilds()
     timeout(time: 1, unit: 'DAYS')
     timestamps()
   }
@@ -31,8 +31,10 @@ pipeline {
             currentBuild.result = 'ABORTED'
             error('Current Build aborted, job parameterized')
           }
-          echo "hello world"
-          echo "$USER"
+          ansiColor('xterm') {
+            echo "hello world"
+            echo "$USER"
+          }
         }
         }
     }
