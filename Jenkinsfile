@@ -5,6 +5,7 @@ pipeline {
   }
   parameters{
     string(name: 'project_name',description: 'Enter Your Project name - We capture it for tracking and reporting purpose')
+    string(name: 'email',description: 'email id to whom VPAT document has to be sent')
     string(name: 'release_name',description: 'Enter Your Release name/number')
     choice(name: 'variant', choices: "IOS\nWebApp/DistributionSystems+Desktop\nAndroid\nMainframe", description: 'Select Variant for VPAT')
     string(name: 'start_date',defaultValue: 'dd/mm/yyyy', description: 'Tentative VPAT Start Date in dd/mm/yyyy format')
@@ -13,11 +14,21 @@ pipeline {
             
   }
   stages {
-    stage('check environment variables') {
+  
+    stage('check environment') {
+      steps{
+          echo "hello world"
+          echo "$USER"
+        }
+    }
+    
+    stage('Sending documents in email') {
       steps{
         echo "hello world"
         echo "$USER"
       }
     }
+
+    
   }
 }
