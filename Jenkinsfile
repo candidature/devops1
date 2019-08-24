@@ -2,6 +2,8 @@ pipeline {
   agent any
   options {
     buildDiscarder(logRotator(numToKeepStr: '5'))
+    disableConcurrentBuilds()
+    timeout(time: 180, units: 'DAYS')
   }
   environment {
     USER = "build"
