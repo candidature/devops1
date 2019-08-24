@@ -31,5 +31,5 @@ pipeline {
         echo "${params.email}"
       }
     }
-    
+  }
 }
