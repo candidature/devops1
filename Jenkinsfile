@@ -22,7 +22,7 @@ pipeline {
       steps{
         script {
           if("${params.dry_run}" == 'yes') {
-            currentBuild.RESULT = 'ABORTED'
+            currentBuild.result = 'ABORTED'
             error('Current Build aborted, job parameterized')
           }
           echo "hello world"
