@@ -6,6 +6,7 @@ pipeline {
     
   }
   parameters{
+    choice(name: 'dry_run', choices: "yes\nno", description: 'Dry run')
     string(name: 'project_name',description: 'Enter Your Project name - We capture it for tracking and reporting purpose')
     string(name: 'email',description: 'email id to whom VPAT document has to be sent')
     string(name: 'release_name',description: 'Enter Your Release name/number')
@@ -19,8 +20,14 @@ pipeline {
   
     stage('check environment') {
       steps{
+        script{
+          if(${params.dry_run} == 'yes') {
+            currentBuild.RESULT = 'ABORTED'
+            error('Current Build aborted, job parameterized')
+          }
           echo "hello world"
           echo "$USER"
+        }
         }
     }
     
@@ -31,5 +38,7 @@ pipeline {
         echo "${params.email}"
       }
     }
+    
+    
   }
 }
