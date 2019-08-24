@@ -1,5 +1,8 @@
 pipeline {
   agent any
+  options {
+    buildDiscarder(logRotator(numToKeepStr: '5'))
+  }
   environment {
     USER = "build"
     ADMIN_EMAIL = 'pankaj.gupta@broadcom.com'
