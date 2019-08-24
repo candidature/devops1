@@ -53,20 +53,20 @@ pipeline {
     }
     stage('Request for approval') {
       steps{
+        script {
         timeout(time:10, unit:'DAYS') {
-          
           userInput = input(
                     id: 'Approve1', 
                     message: 'Do NOT click unless you already login! Only authorized person shall approve', 
                     submitterParameter: 'approver' , 
                     parameters: [
                       [$class: 'BooleanParameterDefinition', 
-                       defaultValue: true, description: '', name: 'Please confirm you approve this release']
-                ])
+                       defaultValue: true, description: '', name: 'Please confirm you approve this release']])
           
-        }
-        }
-      }
+        }//timeout end
+        }//script end
+      }//step end
+      }//stage end
       
-    }
+    }//stages end
 }
