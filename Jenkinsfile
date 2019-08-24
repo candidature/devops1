@@ -3,7 +3,7 @@ pipeline {
   options {
     buildDiscarder(logRotator(numToKeepStr: '5'))
     disableConcurrentBuilds()
-    timeout(time: 180, units: 'DAYS')
+    timeout(time: 180, unit: 'DAYS')
   }
   environment {
     USER = "build"
