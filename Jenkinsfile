@@ -20,11 +20,7 @@ pipeline {
   
     stage('check environment') {
       steps{
-        script{
-          if(${params.dry_run} == 'yes') {
-            currentBuild.RESULT = 'ABORTED'
-            error('Current Build aborted, job parameterized')
-          }
+        
           echo "hello world"
           echo "$USER"
         }
