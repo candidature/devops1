@@ -2,6 +2,8 @@ pipeline {
   agent any
   environment {
     USER = "build"
+    ADMIN_EMAIL = 'pankaj.gupta@broadcom.com'
+    
   }
   parameters{
     string(name: 'project_name',description: 'Enter Your Project name - We capture it for tracking and reporting purpose')
@@ -24,11 +26,10 @@ pipeline {
     
     stage('Sending documents in email') {
       steps{
-        echo "hello world"
-        echo "$USER"
+        echo "Sending documents by email to ..."
+        echo "$ADMIN_EMAIL"
+        echo "${params.email}"
       }
     }
-
     
-  }
 }
