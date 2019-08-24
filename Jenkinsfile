@@ -35,8 +35,8 @@ pipeline {
       steps{
         echo "Sending documents by email to ..."
         echo "$ADMIN_EMAIL"
-        echo "${params.email}"
-        emailext(mimeType: 'text/html', replyTo: 'xxxx', attachmentsPattern: '**/report.html', body: 'Find attachments', subject: 'test', to: 'pankaj.gupta@broadcom.com')  
+        //echo "${params.email}"
+        emailext(mimeType: 'text/html', replyTo: 'xxxx', attachmentsPattern: '**/Jenkinsfile', body: 'Find attachments', subject: 'test', to: 'pankaj.gupta@broadcom.com')  
       }
     }
     
