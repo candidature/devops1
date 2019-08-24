@@ -43,6 +43,37 @@ pipeline {
       }
     }
     
+    stage('Sending email for support team') {
+      steps{
+        script {
+        echo "Sending documents by email to ..."
+        echo "$ADMIN_EMAIL"
+        
+        echo "${params.email}"
+        emailext(mimeType: 'text/html', replyTo: 'xxxx', attachmentsPattern: '**/Jenkinsfile', body: 'Find attachments', subject: 'test', to: 'pankaj.gupta@broadcom.com')
+        }
+      }
+      stage('Request for approval') {
+      steps{
+        timeout(time:10, unit:'DAYS') {
+          
+          userInput = input(
+                    id: 'Approve1', 
+                    message: 'Do NOT click unless you already login! Only authorized person shall approve', 
+                    submitterParameter: 'approver' , 
+                    parameters: [
+                      [$class: 'BooleanParameterDefinition', 
+                       defaultValue: true, description: '', name: 'Please confirm you approve this release']
+                ])
+          
+        }
+        }
+      }
+      
+    }
+    
+    
+    
     
   }
 }
