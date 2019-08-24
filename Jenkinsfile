@@ -24,13 +24,15 @@ pipeline {
   }
   stages {
   
-    stage('check environment') {
+    stage('check and set environment') {
       steps{
         script {
           if("${params.dry_run}" == 'yes') {
             currentBuild.result = 'ABORTED'
             error('Current Build aborted, job parameterized')
           }
+          currentBuild.displayName = "$project_name"
+          currentBuild.description = "Release: $release_name startDate: $start_date "
           ansiColor('xterm') {
             echo "hello world"
             echo "$USER"
