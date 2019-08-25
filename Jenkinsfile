@@ -78,5 +78,15 @@ pipeline {
       }//step end
       }//stage end
       
+    
+    
+    
+    stage('Cleaning WS') {
+      steps{
+        cleanWS()
+      }
+    }
+    
+    
     }//stages end
 }
