@@ -26,20 +26,26 @@ pipeline {
   
     stage('check and set environment') {
       steps{
+        wrap([$class: 'BuildUser']) {
+          
+          echo "You are ${BUILD_USER}"
         script {
+            
           if("${params.dry_run}" == 'yes') {
             currentBuild.result = 'ABORTED'
             error('Current Build aborted, job parameterized')
-          }
+          }//end if
           currentBuild.displayName = "$project_name"
           currentBuild.description = "Release: $release_name startDate: $start_date "
           ansiColor('xterm') {
             echo "hello world"
             echo "$USER"
-          }
-        }
-        }
-    }
+          }//end ansi
+        }//end script
+        }//end BuildUser plugin block
+        
+        }//end steps
+    }//end stage
     
     stage('Sending documents in email') {
       steps{
