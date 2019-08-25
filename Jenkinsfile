@@ -89,7 +89,9 @@ pipeline {
     
     stage('Cleaning WS') {
       steps{
-        cleanWS()
+        script {
+          cleanWS()
+        }
       }
     }
     
