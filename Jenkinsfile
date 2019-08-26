@@ -24,7 +24,7 @@ pipeline {
   }
   stages {
   
-    stage('check and set environment') {
+    stage('Set environment') {
       steps{
         wrap([$class: 'BuildUser']) {
           
@@ -47,7 +47,7 @@ pipeline {
         }//end steps
     }//end stage
     
-    stage('Sending documents in email') {
+    stage('Sending VPAT documents in email') {
       steps{
         script {
         echo "Sending documents by email to ..."
@@ -59,10 +59,11 @@ pipeline {
       }
     }
     
-    stage('Sending email for support team') {
+    stage('Sending email to support team, VPAT started') {
       steps{
         script {
         echo "Sending documents by email to ..."
+          
         echo "$ADMIN_EMAIL"
         }
       }
@@ -85,7 +86,7 @@ pipeline {
       }//stage end
       
     
-    stage('Sending email to support team for VPAT verification') {
+    stage('VPAT completed by dev, sending email to support team for VPAT verification') {
       steps{
         script {
         echo "Sending documents by email to ..."
@@ -99,7 +100,7 @@ pipeline {
     }
     
     
-    stage('Support team VPAT verification completed, proceed to close the process?') {
+    stage('VPAT verification completed, proceed to close the process?') {
       steps{
         script {
         timeout(time:10, unit:'DAYS') {
@@ -117,7 +118,18 @@ pipeline {
       }//stage end
     
     
-    
+    stage('Process close email') {
+      steps{
+        script {
+        echo "Sending process close email ..."
+        echo "$ADMIN_EMAIL"
+        
+        echo "${params.email}"
+        emailext(mimeType: 'text/html', replyTo: 'xxxx',  body: 'Request for VPAT verification', subject: 'VPAT completed - Verification start', to: 'pankaj.gupta@broadcom.com')
+          
+        }
+      }
+    }
     
     stage('Cleaning WS') {
       steps{
