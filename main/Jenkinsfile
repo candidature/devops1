@@ -84,7 +84,7 @@ pipeline {
                             ])
           
 //String name, String defaultValue, String regex, String failedValidationMessage, String description
-          validatingString(name: 'userInput', regex: '.*', failedValidationMessage: 'Failed Regex', description: 'This is sample desc') {
+          def validatedInput = validatingString(name: 'userInput', regex: '\.\*', failedValidationMessage: 'Failed Regex', description: 'This is sample desc') {
             
           }
           
