@@ -1,0 +1,144 @@
+pipeline {
+  agent any
+  options {
+    buildDiscarder(logRotator(numToKeepStr: '5'))
+    //disableConcurrentBuilds()
+    timeout(time: 1, unit: 'DAYS')
+    timestamps()
+  }
+  environment {
+    USER = "build"
+    ADMIN_EMAIL = 'pankaj.gupta@broadcom.com'
+    
+  }
+  parameters{
+    choice(name: 'dry_run', choices: "yes\nno", description: 'Dry run')
+    string(name: 'project_name',description: 'Enter Your Project name - We capture it for tracking and reporting purpose')
+    string(name: 'email',description: 'email id to whom VPAT document has to be sent')
+    string(name: 'release_name',description: 'Enter Your Release name/number')
+    choice(name: 'variant', choices: "IOS\nWebApp/DistributionSystems+Desktop\nAndroid\nMainframe", description: 'Select Variant for VPAT')
+    string(name: 'start_date',defaultValue: 'dd/mm/yyyy', description: 'Tentative VPAT Start Date in dd/mm/yyyy format')
+    string(name: 'finish_date',defaultValue: 'dd/mm/yyyy', description: 'Tentative VPAT End Date in dd/mm/yyyy format')
+    string(name: 'release_date',defaultValue: 'dd/mm/yyyy', description: 'Tentative your product release Date in dd/mm/yyyy format')
+            
+  }
+  stages {
+  
+    stage('Set environment') {
+      steps{
+        wrap([$class: 'BuildUser']) {
+          
+          echo "You are ${BUILD_USER}"
+        script {
+            
+          if("${params.dry_run}" == 'yes') {
+            currentBuild.result = 'ABORTED'
+            error('Current Build aborted, job parameterized')
+          }//end if
+          currentBuild.displayName = "$project_name"
+          currentBuild.description = "Release: $release_name startDate: $start_date "
+          ansiColor('xterm') {
+            echo "hello world"
+            echo "$USER"
+          }//end ansi
+        }//end script
+        }//end BuildUser plugin block
+        
+        }//end steps
+    }//end stage
+    
+    stage('Sending VPAT documents in email') {
+      steps{
+        script {
+        echo "Sending documents by email to ..."
+        echo "$ADMIN_EMAIL"
+        
+        echo "${params.email}"
+        emailext(mimeType: 'text/html', replyTo: 'xxxx', attachmentsPattern: '**/Jenkinsfile', body: 'Find attachments', subject: 'test', to: 'pankaj.gupta@broadcom.com')
+        }
+      }
+    }
+    
+    stage('Sending email to support team, VPAT started') {
+      steps{
+        script {
+        echo "Sending documents by email to ..."
+          
+        echo "$ADMIN_EMAIL"
+        }
+      }
+    }
+    stage('VPAT completed? and proceed for verification ?') {
+      steps{
+        script {
+        timeout(time:10, unit:'DAYS') {
+          userInput = input(
+                    id: 'Approve1', 
+                    message: 'Do NOT click unless you already login! Only authorized person shall approve', 
+                    submitterParameter: 'approver' , 
+                    parameters: [
+                      [$class: 'BooleanParameterDefinition', 
+                       defaultValue: true, description: '', name: 'Please confirm you approve this release']])
+          
+        }//timeout end
+        }//script end
+      }//step end
+      }//stage end
+      
+    
+    stage('VPAT completed by dev, sending email to support team for VPAT verification') {
+      steps{
+        script {
+        echo "Sending documents by email to ..."
+        echo "$ADMIN_EMAIL"
+        
+        echo "${params.email}"
+        emailext(mimeType: 'text/html', replyTo: 'xxxx',  body: 'Request for VPAT verification', subject: 'VPAT completed - Verification start', to: 'pankaj.gupta@broadcom.com')
+          
+        }
+      }
+    }
+    
+    
+    stage('VPAT verification completed, proceed to close the process?') {
+      steps{
+        script {
+        timeout(time:10, unit:'DAYS') {
+          userInput = input(
+                    id: 'Approve1', 
+                    message: 'Do NOT click unless you already login! Only authorized person shall approve', 
+                    submitterParameter: 'approver' , 
+                    parameters: [
+                      [$class: 'BooleanParameterDefinition', 
+                       defaultValue: true, description: '', name: 'Please confirm you approve this release']])
+          
+        }//timeout end
+        }//script end
+      }//step end
+      }//stage end
+    
+    
+    stage('Process close email') {
+      steps{
+        script {
+        echo "Sending process close email ..."
+        echo "$ADMIN_EMAIL"
+        
+        echo "${params.email}"
+        emailext(mimeType: 'text/html', replyTo: 'xxxx',  body: 'Request for VPAT verification', subject: 'VPAT completed - Verification start', to: 'pankaj.gupta@broadcom.com')
+          
+        }
+      }
+    }
+    
+    stage('Cleaning WS') {
+      steps{
+        script {
+          cleanWS()
+        }
+      }
+    }
+    
+    
+    }//stages end
+}
