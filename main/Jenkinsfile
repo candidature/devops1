@@ -82,7 +82,7 @@ pipeline {
                                             description: 'URL of VPAT documents',
                                             name: 'vpat_docs', required: true)
                             ])
-          step([$class],'ValidatingStringParameterValue') {
+          step([$class: 'ValidatingStringParameterValue']) {
           }
           
           vpat_docs = userInput.vpat_docs?:''
