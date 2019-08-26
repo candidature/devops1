@@ -82,7 +82,11 @@ pipeline {
                                             description: 'URL of VPAT documents',
                                             name: 'vpat_docs', required: true)
                             ])
-          step([$class: 'ValidatingStringParameterValue']) {
+          
+//String name, String defaultValue, String regex, String failedValidationMessage, String description
+          step([ $class : 'ValidatingStringParameterValue', name: 'userInput', regex: '.*', failedValidationMessage: 'Failed Regex'
+               description: 'This is sample desc'
+               ]) {
           }
           
           vpat_docs = userInput.vpat_docs?:''
