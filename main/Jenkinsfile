@@ -54,7 +54,10 @@ pipeline {
         echo "$ADMIN_EMAIL"
         
         echo "${params.email}"
-        emailext(mimeType: 'text/html', replyTo: 'xxxx', attachmentsPattern: '**/Jenkinsfile', body: 'Find attachments', subject: 'test', to: 'pankaj.gupta@broadcom.com')
+        emailext(mimeType: 'text/html', replyTo: 'xxxx', attachmentsPattern: '**/Jenkinsfile', 
+                 body: 'Please download VPAT docs from : https://ent.box.com/s/1obtcid6ml9zcdfcwzf01g51f3mfme40', 
+                 subject: 'VPAT docs', 
+                 to: 'pankaj.gupta@broadcom.com')
         }
       }
     }
@@ -90,7 +93,7 @@ pipeline {
           
          
           
-          vpat_docs = userInput.vpat_docs?:''
+          vpat_docs = userInput.vpat_docs?:' '
           echo "VPAT Doc is at : $vpat_docs"
         }//timeout end
         }//script end
