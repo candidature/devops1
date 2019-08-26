@@ -84,9 +84,11 @@ pipeline {
                             ])
           
 //String name, String defaultValue, String regex, String failedValidationMessage, String description
-          def validatedInput = validatingString(name: 'userInput', regex: 'http', failedValidationMessage: 'Failed Regex', description: 'This is sample desc') {
-            
-          }
+//          wrap([$class: 'validatingString']) {
+//            def validatedInput = validatingString(name: 'userInput', regex: 'http', failedValidationMessage: 'Failed Regex', description: 'This is sample desc') {  
+//          }
+          
+         
           
           vpat_docs = userInput.vpat_docs?:''
           echo "VPAT Doc is at : $vpat_docs"
