@@ -80,8 +80,10 @@ pipeline {
                             parameters: [
                                     string(defaultValue: 'None',
                                             description: 'URL of VPAT documents',
-                                            name: 'vpat_docs')
+                                            name: 'vpat_docs', required: true)
                             ])
+          step([$class,'ValidatingStringParameterValue') {
+          }
           
           vpat_docs = userInput.vpat_docs?:''
           echo "VPAT Doc is at : $vpat_docs"
@@ -117,6 +119,8 @@ pipeline {
                       [$class: 'BooleanParameterDefinition', 
                        defaultValue: true, description: '', name: 'Please confirm you approve this release']])
           
+          ValidatingStringParameterValue
+          
         }//timeout end
         }//script end
       }//step end
@@ -135,6 +139,7 @@ pipeline {
         }
       }
     }
+    
     
     stage('Cleaning WS') {
       steps{
