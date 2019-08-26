@@ -122,7 +122,7 @@ pipeline {
                       [$class: 'BooleanParameterDefinition', 
                        defaultValue: true, description: '', name: 'Please confirm you approve this release']])
           
-          ValidatingStringParameterValue
+     
           
         }//timeout end
         }//script end
