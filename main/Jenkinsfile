@@ -47,6 +47,7 @@ pipeline {
                 if ("$params.release_name" == 'NONE') {ex("release_name", "$ADMIN_EMAIL", "${BUILD_USER_EMAIL}")}
                 currentBuild.displayName = "$project_name"
                 currentBuild.description = "Release: $release_name"
+                echo "Days VPAT can be open is : $params.finish_date - $params.start_date"
                 
             }//end script
             }//end wrap
