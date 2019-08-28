@@ -20,10 +20,7 @@ pipeline {
     USER = "build"
     ADMIN_EMAIL = 'pankaj.gupta@broadcom.com'
     ADMIN_GROUP = ''
-    wrap([$class: 'BuildUser']) {
-        def submitter = "${BUILD_USER_EMAIL}"
-    }
-    
+    submitter = ''    
   }
   parameters{
     //choice(name: 'dry_run', choices: "yes\nno", description: 'Dry run')
@@ -41,6 +38,7 @@ pipeline {
         steps {
             wrap([$class: 'BuildUser']) {
             script {
+                submitter = "${BUILD_USER_EMAIL}"
                 println(getBinding().hasVariable(params.project_name))
                 println(getBinding().hasVariable(params.release_name))
                 
@@ -83,10 +81,10 @@ pipeline {
         echo "$ADMIN_EMAIL"
         
         echo "${params.email}"
-        emailext(mimeType: 'text/html', replyTo: 'xxxx', attachmentsPattern: '**/Jenkinsfile', 
+        emailext(mimeType: 'text/html', replyTo: $ADMIN_EMAIL, 
                  body: "Hello, \n\n You can download your project specific VPAT docs from : https://ent.box.com/s/1obtcid6ml9zcdfcwzf01g51f3mfme40 \n\nThank you! DevOps Team", 
                  subject: 'VPAT docs', 
-                 to: 'pankaj.gupta@broadcom.com')
+                 to: "$submitter")
         }
       }
     }
