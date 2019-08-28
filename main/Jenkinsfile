@@ -40,9 +40,9 @@ pipeline {
             wrap([$class: 'BuildUser']) {
             script {
                 //make some crazy validation
-                if ("${params.project_name}" != null ) {ex("project_name", $env.ADMIN_EMAIL, ${BUILD_USER})}
-                if ("${params.email}" != null ) {ex("email", $env.ADMIN_EMAIL, ${BUILD_USER})}
-                if ("${params.release_name}" != null) {ex("release_name", $env.ADMIN_EMAIL, ${BUILD_USER})}
+                if ("${params.project_name}" != null ) {ex("project_name", $ADMIN_EMAIL, ${BUILD_USER})}
+                if ("${params.email}" != null ) {ex("email", $ADMIN_EMAIL, ${BUILD_USER})}
+                if ("${params.release_name}" != null) {ex("release_name", $ADMIN_EMAIL, ${BUILD_USER})}
                 
             }//end script
             }//end wrap
