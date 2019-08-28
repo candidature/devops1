@@ -111,9 +111,9 @@ pipeline {
                             parameters: [
                                     validatingString(defaultValue: 'None',
                                             description: 'Specify a VPAT  shared location - Box?',
-                                            failedValidationMessage: 'Specify url in proper format',
-                                            regex: '\\S*www\\.\\S+',
-                                            name: 'vpat_docs', required: true)
+                                            failedValidationMessage: 'Minimum 10 characters',
+                                                     regex: '[^ ]{10,}',
+                                            name: 'vpat_docs')
                             ])
           
 //String name, String defaultValue, String regex, String failedValidationMessage, String description
@@ -123,8 +123,8 @@ pipeline {
           
          
           
-          vpat_docs = userInput.vpat_docs?:' '
-          echo "VPAT Doc is at : $vpat_docs"
+          vpat_doc = userInput.vpat_docs?:' '
+          echo "VPAT Doc is at : $vpat_doc"
         }//timeout end
         }//script end
       }//step end
