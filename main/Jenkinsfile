@@ -24,13 +24,13 @@ pipeline {
   }
   parameters{
     //choice(name: 'dry_run', choices: "yes\nno", description: 'Dry run')
-    string(name: 'project_name',defaultValue: "NONE", description: 'Enter Your Project name - We capture it for tracking and reporting purpose')
+    validatingString(name: 'project_name',defaultValue: "NONE", regex: '^[a-zA-Z0-9_]+$', failedValidationMessage: 'Missing Project name', description: 'Enter Your Project name - We capture it for tracking and reporting purpose')
     string(name: 'release_name',defaultValue: "NONE", description: 'Enter Your Release name/number')
     choice(name: 'variant', choices: "IOS\nWebApp/DistributionSystems+Desktop\nAndroid\nMainframe", description: 'Select Variant for VPAT')
     string(name: 'start_date',defaultValue: 'dd/mm/yyyy', description: 'Tentative VPAT Start Date in dd/mm/yyyy format')
     string(name: 'finish_date',defaultValue: 'dd/mm/yyyy', description: 'Tentative VPAT End Date in dd/mm/yyyy format')
     string(name: 'release_date',defaultValue: 'dd/mm/yyyy', description: 'Tentative your product release Date in dd/mm/yyyy format')
-    validatingString(name:'project_name', defaultValue: '', description: 'desc', regex: '^[a-zA-Z0-9_]+$', failedValidationMessage: 'Missing Project name')
+
   }
   stages {
   
