@@ -121,8 +121,8 @@ pipeline {
           
          
           
-          vpat_doc = userInput.vpat_docs?:' '
-          echo "VPAT Doc is at : $vpat_doc"
+          //vpat_doc = userInput.vpat_docs?:' '
+          //echo "VPAT Doc is at : $vpat_doc"
         }//timeout end
         }//script end
       }//step end
