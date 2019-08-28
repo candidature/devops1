@@ -99,18 +99,16 @@ pipeline {
         }
       }
     }
-    stage('VPAT Testing and Writing completed? and proceed for approval ?') {
+    stage('VPAT Testing and Writing completed ->  Now proceed for approval, Approve to proceed and Abort to cancel?') {
       steps{
         script {
         timeout(time:10, unit:'DAYS') {
-          
-          
-          
-          def userInput = input(
+        def userInput = input(
                             parameters: [[
                                 $class: 'ValidatingStringParameterDefinition',
                                     name: 'vpat_docs',
                                     failedValidationMessage: 'Minimum 10 characters',
+                                    description: 'Specify a Box URL where you have uploaded documents (without spaces)',
                                     regex: '[^ ]{10,}'
                             ]])
           
@@ -120,7 +118,7 @@ pipeline {
 //          }
           
          
-            echo "$userInput"
+            echo "Documents are at this location as per user input: $userInput"
           
           //vpat_doc = userInput.vpat_docs?:' '
           //echo "VPAT Doc is at : $vpat_doc"
@@ -130,13 +128,10 @@ pipeline {
       }//stage end
       
     
-    stage('VPAT completed by dev, sending email to support team for VPAT verification') {
+    stage('VPAT completed by dev, updating testing defects in Rally/JIRA?') {
       steps{
         script {
-        echo "Sending documents by email to ..."
-        echo "$ADMIN_EMAIL"
-        
-        echo "${params.email}"
+        echo "VPAT completed by dev, updating testing defects in Rally/JIRA?"
         emailext(mimeType: 'text/html', replyTo: 'xxxx',  body: 'Request for VPAT verification', subject: 'VPAT completed - Verification start', to: 'pankaj.gupta@broadcom.com')
           
         }
@@ -144,9 +139,10 @@ pipeline {
     }
     
     
-    stage('VPAT verification completed, proceed to close the process?') {
+    stage('VPAT process completed, proceed to close the process?') {
       steps{
         script {
+            echo "You should close it within 10 days from now else it will automatically timeout"
         timeout(time:10, unit:'DAYS') {
           userInput = input(
                     id: 'Approve1', 
@@ -164,7 +160,7 @@ pipeline {
       }//stage end
     
     
-    stage('Process close email') {
+    stage('Closure email') {
       steps{
         script {
         echo "Sending process close email ..."
