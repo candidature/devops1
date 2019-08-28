@@ -47,6 +47,8 @@ pipeline {
                 if ("$params.release_name" == 'NONE') {ex("release_name", "$ADMIN_EMAIL", "${BUILD_USER_EMAIL}")}
                 currentBuild.displayName = "$project_name"
                 currentBuild.description = "Release: $release_name"
+                def end_date = new SimpleDateFormat('yyyy-MM-dd HH:mm:ss.SSSZ').parse("$params.release_date".trim())
+                echo "$end_date"
             }//end script
             }//end wrap
         }//end steps
