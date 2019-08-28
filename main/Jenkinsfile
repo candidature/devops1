@@ -30,7 +30,7 @@ pipeline {
     string(name: 'start_date',defaultValue: 'dd/mm/yyyy', description: 'Tentative VPAT Start Date in dd/mm/yyyy format')
     string(name: 'finish_date',defaultValue: 'dd/mm/yyyy', description: 'Tentative VPAT End Date in dd/mm/yyyy format')
     string(name: 'release_date',defaultValue: 'dd/mm/yyyy', description: 'Tentative your product release Date in dd/mm/yyyy format')
-    validatingString(name:'project_name', defaultValue: '', description: 'desc', regularExpression: '^[a-zA-Z0-9_]+$', failedValidationMessage: 'Missing Project name')
+    validatingString(name:'project_name', defaultValue: '', description: 'desc', regExp: '^[a-zA-Z0-9_]+$', failedValidationMessage: 'Missing Project name')
   }
   stages {
   
