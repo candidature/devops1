@@ -39,14 +39,14 @@ pipeline {
         steps {
             wrap([$class: 'BuildUser']) {
             script {
-                println(getBinding().hasVariable("$params.project_name"))
-                println(getBinding().hasVariable("$params.email"))
-                println(getBinding().hasVariable("$params.release_name"))
+                println(getBinding().hasVariable(params.project_name))
+                println(getBinding().hasVariable(params.email))
+                println(getBinding().hasVariable(params.release_name))
                 
                 //make some crazy validation
-                if (!getBinding().hasVariable("$params.project_name")) {ex("project_name", "$ADMIN_EMAIL", "${BUILD_USER_EMAIL}")}
-                if (!getBinding().hasVariable("$params.email")) {ex("email", "$ADMIN_EMAIL", "${BUILD_USER_EMAIL}")}
-                if (!getBinding().hasVariable("$params.release_name")) {ex("release_name", "$ADMIN_EMAIL", "${BUILD_USER_EMAIL}")}
+                if (!getBinding().hasVariable(params.project_name)) {ex("project_name", "$ADMIN_EMAIL", "${BUILD_USER_EMAIL}")}
+                if (!getBinding().hasVariable(params.email)) {ex("email", "$ADMIN_EMAIL", "${BUILD_USER_EMAIL}")}
+                if (!getBinding().hasVariable(params.release_name)) {ex("release_name", "$ADMIN_EMAIL", "${BUILD_USER_EMAIL}")}
                 
             }//end script
             }//end wrap
