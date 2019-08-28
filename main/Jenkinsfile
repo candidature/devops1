@@ -107,7 +107,6 @@ pipeline {
           
           
           def userInput = input(
-                            id: 'userInput', message: 'Do NOT click unless you already login! Only authorized person shall approve',
                             parameters: [[
                                 $class: 'ValidatingStringParameterDefinition',
                                     name: 'vpat_docs'
