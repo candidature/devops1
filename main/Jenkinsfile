@@ -1,3 +1,8 @@
+def ex(param){
+    currentBuild.result = 'ABORTED'
+    error('BAD PARAM: ' + param)
+}
+
 pipeline {
   agent any
   options {
@@ -24,6 +29,18 @@ pipeline {
   }
   stages {
   
+    stage("check params") {
+        steps {
+            script {
+                //make some crazy validation
+                if ("${params.project_name}" != null ) {ex("project_name")}
+                if ("${params.email}" != null ) {ex("email")}
+                if ("${params.release_name}" != null) {ex("release_name")}
+                
+            }
+        }
+    }
+    
     stage('Set environment') {
       steps{
         wrap([$class: 'BuildUser']) {
