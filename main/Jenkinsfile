@@ -3,7 +3,6 @@ def ex(msg, admin, submitter ){
                  body: 'You did not fill all the fields in form.'
                  subject: 'missing option while filling form', 
                  to: 'pankaj.gupta@broadcom.com')
-    }
     echo "$submitter"
     currentBuild.result = 'ABORTED'
     error('BAD PARAM: ' + msg)
