@@ -120,6 +120,7 @@ pipeline {
 //          }
           
          
+            echo "$userInput"
           
           //vpat_doc = userInput.vpat_docs?:' '
           //echo "VPAT Doc is at : $vpat_doc"
@@ -180,7 +181,7 @@ pipeline {
     stage('Cleaning WS') {
       steps{
         script {
-          cleanWS()
+          cleanWs()
         }
       }
     }
