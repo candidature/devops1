@@ -1,6 +1,12 @@
-def ex(param){
+def ex(msg, admin, submitter ){
+    emailext(mimeType: 'text/html', replyTo: 'pankaj.gupta@broadcom.com', 
+                 body: 'You did not fill all the fields in form.'
+                 subject: 'missing option while filling form', 
+                 to: 'pankaj.gupta@broadcom.com')
+    }
+    echo "$submitter"
     currentBuild.result = 'ABORTED'
-    error('BAD PARAM: ' + param)
+    error('BAD PARAM: ' + msg)
 }
 
 pipeline {
@@ -14,6 +20,7 @@ pipeline {
   environment {
     USER = "build"
     ADMIN_EMAIL = 'pankaj.gupta@broadcom.com'
+    ADMIN_GROUP = ''
     
   }
   parameters{
@@ -31,15 +38,17 @@ pipeline {
   
     stage("check params") {
         steps {
+            wrap([$class: 'BuildUser']) {
             script {
                 //make some crazy validation
-                if ("${params.project_name}" != null ) {ex("project_name")}
-                if ("${params.email}" != null ) {ex("email")}
-                if ("${params.release_name}" != null) {ex("release_name")}
+                if ("${params.project_name}" != null ) {ex("project_name", $env.ADMIN_EMAIL, ${BUILD_USER})}
+                if ("${params.email}" != null ) {ex("email", $env.ADMIN_EMAIL, ${BUILD_USER})}
+                if ("${params.release_name}" != null) {ex("release_name", $env.ADMIN_EMAIL, ${BUILD_USER})}
                 
-            }
-        }
-    }
+            }//end script
+            }//end wrap
+        }//end steps
+    }//end stage
     
     stage('Set environment') {
       steps{
