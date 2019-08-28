@@ -20,6 +20,9 @@ pipeline {
     USER = "build"
     ADMIN_EMAIL = 'pankaj.gupta@broadcom.com'
     ADMIN_GROUP = ''
+    wrap([$class: 'BuildUser']) {
+        def submitter = "${BUILD_USER_EMAIL}"
+    }
     
   }
   parameters{
@@ -81,7 +84,7 @@ pipeline {
         
         echo "${params.email}"
         emailext(mimeType: 'text/html', replyTo: 'xxxx', attachmentsPattern: '**/Jenkinsfile', 
-                 body: 'Hello, \n\n You can download your project specific VPAT docs from : https://ent.box.com/s/1obtcid6ml9zcdfcwzf01g51f3mfme40 \n\nThank you! DevOps Team', 
+                 body: "Hello, \n\n You can download your project specific VPAT docs from : https://ent.box.com/s/1obtcid6ml9zcdfcwzf01g51f3mfme40 \n\nThank you! DevOps Team", 
                  subject: 'VPAT docs', 
                  to: 'pankaj.gupta@broadcom.com')
         }
