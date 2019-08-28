@@ -44,9 +44,9 @@ pipeline {
                 println(getBinding().hasVariable("release_name"))
                 
                 //make some crazy validation
-                if ("${params.project_name}") {ex("project_name", "$ADMIN_EMAIL", "${BUILD_USER_EMAIL}")}
-                if ("${params.email}") {ex("email", "$ADMIN_EMAIL", "${BUILD_USER_EMAIL}")}
-                if ("${params.release_name}") {ex("release_name", "$ADMIN_EMAIL", "${BUILD_USER_EMAIL}")}
+                if (!getBinding().hasVariable("project_name")) {ex("project_name", "$ADMIN_EMAIL", "${BUILD_USER_EMAIL}")}
+                if (!getBinding().hasVariable("email")) {ex("email", "$ADMIN_EMAIL", "${BUILD_USER_EMAIL}")}
+                if (!getBinding().hasVariable("release_name")) {ex("release_name", "$ADMIN_EMAIL", "${BUILD_USER_EMAIL}")}
                 
             }//end script
             }//end wrap
