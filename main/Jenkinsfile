@@ -109,7 +109,7 @@ pipeline {
           def userInput = input(
                             parameters: [[
                                 $class: 'ValidatingStringParameterDefinition',
-                                    name: 'vpat_docs'
+                                    name: 'vpat_docs',
                                     failedValidationMessage: 'Minimum 10 characters',
                                     regex: '[^ ]{10,}'
                             ]])
