@@ -111,8 +111,8 @@ pipeline {
                             parameters: [
                                     validatingString(defaultValue: 'None',
                                             description: 'Specify a VPAT  shared location - Box?',
-                                            failedValidationMessage: 'Specify date in proper format',
-                                            regex: 'https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,}',                                             
+                                            failedValidationMessage: 'Specify url in proper format',
+                                            regex: 'https?:\\/\\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\\/\\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,}',                                             
                                             name: 'vpat_docs', required: true)
                             ])
           
