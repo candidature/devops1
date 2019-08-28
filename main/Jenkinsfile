@@ -25,7 +25,6 @@ pipeline {
   parameters{
     //choice(name: 'dry_run', choices: "yes\nno", description: 'Dry run')
     string(name: 'project_name',defaultValue: "NONE", description: 'Enter Your Project name - We capture it for tracking and reporting purpose')
-    string(name: 'email',defaultValue: "NONE", description: 'email id to whom VPAT document has to be sent')
     string(name: 'release_name',defaultValue: "NONE", description: 'Enter Your Release name/number')
     choice(name: 'variant', choices: "IOS\nWebApp/DistributionSystems+Desktop\nAndroid\nMainframe", description: 'Select Variant for VPAT')
     string(name: 'start_date',defaultValue: 'dd/mm/yyyy', description: 'Tentative VPAT Start Date in dd/mm/yyyy format')
@@ -40,20 +39,19 @@ pipeline {
             wrap([$class: 'BuildUser']) {
             script {
                 println(getBinding().hasVariable(params.project_name))
-                println(getBinding().hasVariable(params.email))
                 println(getBinding().hasVariable(params.release_name))
                 
                 //make some crazy validation
                 if ("$params.project_name" == 'NONE') {ex("project_name", "$ADMIN_EMAIL", "${BUILD_USER_EMAIL}")}
-                if ("$params.email" == 'NONE') {ex("email", "$ADMIN_EMAIL", "${BUILD_USER_EMAIL}")}
                 if ("$params.release_name" == 'NONE') {ex("release_name", "$ADMIN_EMAIL", "${BUILD_USER_EMAIL}")}
-                
+                currentBuild.displayName = "$project_name"
+                currentBuild.description = "Release: $release_name"
             }//end script
             }//end wrap
         }//end steps
     }//end stage
     
-    stage('Set environment') {
+    /*stage('Set environment') {
       steps{
         wrap([$class: 'BuildUser']) {
           
@@ -64,8 +62,7 @@ pipeline {
             currentBuild.result = 'ABORTED'
             error('Current Build aborted, job parameterized')
           }//end if
-          currentBuild.displayName = "$project_name"
-          currentBuild.description = "Release: $release_name startDate: $start_date "
+          
           ansiColor('xterm') {
             echo "hello world"
             echo "$USER"
@@ -75,7 +72,7 @@ pipeline {
         
         }//end steps
     }//end stage
-    
+    */
     stage('Sending VPAT documents in email') {
       steps{
         script {
