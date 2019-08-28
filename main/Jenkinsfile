@@ -81,7 +81,7 @@ pipeline {
         echo "$ADMIN_EMAIL"
         
         echo "${params.email}"
-        emailext(mimeType: 'text/html', replyTo: $ADMIN_EMAIL, 
+        emailext(mimeType: 'text/html', replyTo: "$ADMIN_EMAIL", 
                  body: "Hello, \n\n You can download your project specific VPAT docs from : https://ent.box.com/s/1obtcid6ml9zcdfcwzf01g51f3mfme40 \n\nThank you! DevOps Team", 
                  subject: 'VPAT docs', 
                  to: "$submitter")
