@@ -1,11 +1,11 @@
 def ex(msg, admin, submitter ){
-    emailext(mimeType: 'text/html', replyTo: 'pankaj.gupta@broadcom.com', 
-                 body: 'You did not fill all the fields in form.',
+    emailext(mimeType: 'text/html', replyTo: admin, 
+                 body: 'You did not fill all the fields in the form.' + msg ,
                  subject: 'missing option while filling form',
-                 to: 'pankaj.gupta@broadcom.com')
+                 to: submitter )
     echo "$submitter"
     currentBuild.result = 'ABORTED'
-    error('BAD PARAM: ' + msg)
+    error('MISSING PARAM: ' + msg)
 }
 
 pipeline {
@@ -40,9 +40,9 @@ pipeline {
             wrap([$class: 'BuildUser']) {
             script {
                 //make some crazy validation
-                if ("${params.project_name}" != null ) {ex("project_name", "$ADMIN_EMAIL", "${BUILD_USER}")}
-                if ("${params.email}" != null ) {ex("email", "$ADMIN_EMAIL", "${BUILD_USER}")}
-                if ("${params.release_name}" != null) {ex("release_name", "$ADMIN_EMAIL", "${BUILD_USER}")}
+                if ("${params.project_name}" != null ) {ex("project_name", "$ADMIN_EMAIL", "${BUILD_USER_EMAIL}")}
+                if ("${params.email}" != null ) {ex("email", "$ADMIN_EMAIL", "${BUILD_USER_EMAIL}")}
+                if ("${params.release_name}" != null) {ex("release_name", "$ADMIN_EMAIL", "${BUILD_USER_EMAIL}")}
                 
             }//end script
             }//end wrap
