@@ -27,9 +27,9 @@ pipeline {
     validatingString(name: 'project_name',defaultValue: "NONE", regex: '^[a-zA-Z0-9_]{5,}$', failedValidationMessage: 'Missing Project name', description: 'Enter Your Project name - We capture it for tracking and reporting purpose')
     validatingString(name: 'release_name',defaultValue: "NONE", regex: '^[a-zA-Z0-9_]{5,}$', failedValidationMessage: 'Missing Release name', description: 'Enter Your Release name/number')
     choice(name: 'variant', choices: "IOS\nWebApp/DistributionSystems+Desktop\nAndroid\nMainframe", description: 'Select Variant for VPAT')
-    validatingString(name: 'start_date',defaultValue: 'dd/mm/yyyy', regex: "^(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.]((19|20)\\d\\d)$" , failedValidationMessage: 'Specify date in dd\/mm\/yyyy format', description: 'Tentative VPAT Start Date in dd/mm/yyyy format')
-    validatingString(name: 'finish_date',defaultValue: 'dd/mm/yyyy', regex: "^(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.]((19|20)\\d\\d)$" , failedValidationMessage: 'Specify date in dd\/mm\/yyyy format', description: 'Tentative VPAT End Date in dd/mm/yyyy format')
-    validatingString(name: 'release_date',defaultValue: 'dd/mm/yyyy', regex: "^(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.]((19|20)\\d\\d)$" , failedValidationMessage: 'Specify date in dd\/mm\/yyyy format', description: 'Tentative your product release Date in dd/mm/yyyy format')
+    validatingString(name: 'start_date',defaultValue: 'dd/mm/yyyy', regex: '^(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.]((19|20)\\d\\d)$' , failedValidationMessage: 'Specify date in dd\\/mm\\/yyyy format', description: 'Tentative VPAT Start Date in dd/mm/yyyy format')
+    validatingString(name: 'finish_date',defaultValue: 'dd/mm/yyyy', regex: '^(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.]((19|20)\\d\\d)$' , failedValidationMessage: 'Specify date in dd\\/mm\\/yyyy format', description: 'Tentative VPAT End Date in dd/mm/yyyy format')
+    validatingString(name: 'release_date',defaultValue: 'dd/mm/yyyy', regex: '^(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.]((19|20)\\d\\d)$' , failedValidationMessage: 'Specify date in dd\\/mm\\/yyyy format', description: 'Tentative your product release Date in dd/mm/yyyy format')
 
   }
   stages {
