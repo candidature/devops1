@@ -34,7 +34,7 @@ pipeline {
   }
   stages {
   
-    stage("check params") {
+    stage("check params and Initiate VPAT Request") {
         steps {
             wrap([$class: 'BuildUser']) {
             script {
@@ -99,7 +99,7 @@ pipeline {
         }
       }
     }
-    stage('VPAT completed? and proceed for verification ?') {
+    stage('VPAT Testing and Writing completed? and proceed for approval ?') {
       steps{
         script {
         timeout(time:10, unit:'DAYS') {
@@ -110,7 +110,7 @@ pipeline {
                             id: 'userInput', message: 'Do NOT click unless you already login! Only authorized person shall approve',
                             parameters: [
                                     string(defaultValue: 'None',
-                                            description: 'URL of VPAT documents',
+                                            description: 'Specify a VPAT  shared location - Box?',
                                             name: 'vpat_docs', required: true)
                             ])
           
