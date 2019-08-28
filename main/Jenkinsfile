@@ -1,7 +1,7 @@
 def ex(msg, admin, submitter ){
     emailext(mimeType: 'text/html', replyTo: admin, 
-                 body: 'You did not fill all the fields in the form: ' + msg ,
-                 subject: 'missing option while filling form',
+                 body: 'You did not fill all the fields in the form: ' + msg  + " For job $JOB_NAME , $BUILD_DISPLAY_NAME",
+                 subject: 'Missing option while filling form on ' + "$JENKINS_URL",
                  to: submitter )
     echo "$submitter"
     currentBuild.result = 'ABORTED'
