@@ -110,7 +110,6 @@ pipeline {
                             parameters: [[
                                 $class: 'ValidatingStringParameterDefinition',
                                     name: 'vpat_docs'
-                                    description: 'Specify a VPAT  shared location - Box?',
                                     failedValidationMessage: 'Minimum 10 characters',
                                     regex: '[^ ]{10,}'
                             ]])
