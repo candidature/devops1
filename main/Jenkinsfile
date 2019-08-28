@@ -108,13 +108,13 @@ pipeline {
           
           def userInput = input(
                             id: 'userInput', message: 'Do NOT click unless you already login! Only authorized person shall approve',
-                            parameters: [
-                                    validatingString(defaultValue: 'None',
-                                            description: 'Specify a VPAT  shared location - Box?',
-                                            failedValidationMessage: 'Minimum 10 characters',
-                                                     regex: '[^ ]{10,}',
-                                            name: 'vpat_docs')
-                            ])
+                            parameters: [[
+                                $class: 'ValidatingStringParameterDefinition',
+                                    name: 'vpat_docs'
+                                    description: 'Specify a VPAT  shared location - Box?',
+                                    failedValidationMessage: 'Minimum 10 characters',
+                                    regex: '[^ ]{10,}'
+                            ]])
           
 //String name, String defaultValue, String regex, String failedValidationMessage, String description
 //          wrap([$class: 'validatingString']) {
