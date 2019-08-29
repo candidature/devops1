@@ -104,25 +104,18 @@ pipeline {
                  approvers : $params.approvers <br>
                  VPAT Admin : $env.ADMIN_EMAIL <br>
                  <br>
+                 NEXT STEP: Please click on 
                  Thank you! <br>
                  DevOps Team""", 
                  
-                 subject: 'VPAT docs', 
-                 to: "$submitter")
+                 subject: 'VPAT Started - docs and next step', 
+                 to: "$submitter, $ADMIN_EMAIL")
         } // end script
           }//end wrap plugin BuildUser
       } //end step
     } //end stage
     
-    stage('Sending email to support team, VPAT started') {
-      steps{
-        script {
-        echo "Sending documents by email to ..."
-          
-        echo "$ADMIN_EMAIL"
-        }
-      }
-    }
+    
     stage('VPAT Testing and Writing completed ->  Now proceed for approval, Approve to proceed and Abort to cancel?') {
       steps{
         script {
