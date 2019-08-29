@@ -184,7 +184,7 @@ pipeline {
         script {
         echo "VPAT completed by dev, updating testing defects in Rally/JIRA?"
         emailext(mimeType: 'text/html', replyTo: "$ADMIN_EMAIL",  
-                 body: 'Request for VPAT verification',
+                 
                  
                  body: """Hello Admin,
                  <br><br>
