@@ -111,7 +111,7 @@ pipeline {
              
                             id: 'Approve1', 
                             message: 'Do NOT click unless you already login! Only authorized person shall approve', 
-                            submitter: "${ADgroup}" ,
+                            submitter: "$params.approvers" ,
                             submitterParameter: 'approver',
                             parameters: [[
                                 $class: 'ValidatingStringParameterDefinition',
