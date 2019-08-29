@@ -224,7 +224,7 @@ pipeline {
                     id: 'Approve1', 
                     message: 'Do NOT click unless you already login! Only authorized person shall approve', 
                     submitterParameter: 'approver',
-                    submitter: "$ADMIN_OKTA" 
+                    submitter: "$ADMIN_OKTA")
         }//timeout end
         }//script end
       }//step end
