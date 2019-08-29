@@ -54,9 +54,16 @@ pipeline {
                 currentBuild.displayName = "$project_name"
                 currentBuild.description = "Release: $release_name"
 
+              
+                import java.time.*
+
+                // parse and get epoch
+                start_date_epoch=Date.parse("dd/MM/yyyy'Z'", $params.start_date)
+
+                echo "start_date_epoch : $start_date_epoch"
                 
-                def start_date_epoch = sh \'date +%s -d \"$params.start_date\"\', returnStdout: true)
-                def finish_date_epoch = sh \'date +%s -d \"$params.finish_date\"\', returnStdout: true)
+                
+                
                 echo "Start date: $start_date_epoch"
                 echo "Finish date : $finish_date_epoch"
                 def diff = (start_date_epoch as int) - (finish_date_epoch as int)
