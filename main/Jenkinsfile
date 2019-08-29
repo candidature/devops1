@@ -81,18 +81,34 @@ pipeline {
     */
     stage('Sending VPAT documents in email') {
       steps{
+          wrap([$class: 'BuildUser']) {
         script {
         echo "Sending documents by email to ..."
         echo "$ADMIN_EMAIL"
         
         echo "${params.email}"
         emailext(mimeType: 'text/html', replyTo: "$ADMIN_EMAIL", 
-                 body: "Hello, \\n\\n You can download your project specific VPAT docs from : https://ent.box.com/s/1obtcid6ml9zcdfcwzf01g51f3mfme40 \\n\\nThank you! DevOps Team", 
+                 body: "Hello , ${BUILD_USER_EMAIL} " +
+                 "Project name: $params.project_name " +
+                 "Release name: $params.release_name"+
+                 
+                 "Variant: $params.variant"+
+                 "start_date : $params.start_date"+
+                 "finish_date : $params.finish_date"+
+                 "release_date: $params.release_date" +
+                 "approvers : $params.approvers"+
+                 "We have received your request for VPAT, now as per new process you will be required to start with VPAT testing"+
+                 "and fill the forms. " +
+                 "You can download your project specific VPAT docs from : https://ent.box.com/s/1obtcid6ml9zcdfcwzf01g51f3mfme40"+
+                 "Thank you! " +
+                 "DevOps Team", 
+                 
                  subject: 'VPAT docs', 
                  to: "$submitter")
-        }
-      }
-    }
+        } // end script
+          }//end wrap plugin BuildUser
+      } //end step
+    } //end stage
     
     stage('Sending email to support team, VPAT started') {
       steps{
