@@ -104,7 +104,7 @@ pipeline {
                  approvers : $params.approvers <br>
                  VPAT Admin : $env.ADMIN_EMAIL <br>
                  <br>
-                 NEXT STEP: Please click on 
+                 NEXT STEP: Please click on:  <a href="${BUILD_URL}input"> Specify VPAT filled document url location </a>
                  Thank you! <br>
                  DevOps Team""", 
                  
