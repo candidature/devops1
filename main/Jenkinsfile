@@ -88,20 +88,20 @@ pipeline {
         
         echo "${params.email}"
         emailext(mimeType: 'text/html', replyTo: "$ADMIN_EMAIL", 
-                 body: "Hello , ${BUILD_USER_EMAIL}
-                 Project name: $params.project_name 
-                 Release name: $params.release_name
-                 
-                 Variant: $params.variant
-                 start_date : $params.start_date
-                 finish_date : $params.finish_date
-                 release_date: $params.release_date
-                 approvers : $params.approvers
-                 We have received your request for VPAT, now as per new process you will be required to start with VPAT testing
-                 and fill the forms. 
-                 You can download your project specific VPAT docs from : https://ent.box.com/s/1obtcid6ml9zcdfcwzf01g51f3mfme40
-                 Thank you! 
-                 DevOps Team", 
+                 body: """Hello , ${BUILD_USER_EMAIL} \n
+                 Project name: $params.project_name \n
+                 Release name: $params.release_name \n
+                 \n
+                 Variant: $params.variant \n
+                 start_date : $params.start_date \n
+                 finish_date : $params.finish_date \n
+                 release_date: $params.release_date \n
+                 approvers : $params.approvers \n
+                 We have received your request for VPAT, now as per new process you will be required to start with VPAT testing \n
+                 and fill the forms. \n
+                 You can download your project specific VPAT docs from : https://ent.box.com/s/1obtcid6ml9zcdfcwzf01g51f3mfme40 \n
+                 Thank you! \n
+                 DevOps Team""", 
                  
                  subject: 'VPAT docs', 
                  to: "$submitter")
