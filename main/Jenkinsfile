@@ -1,3 +1,5 @@
+import java.time.*
+
 def ex(msg, admin, submitter ){
     emailext(mimeType: 'text/html', replyTo: admin, 
                  body: 'You did not fill all the fields in the form: ' + msg  + " For job $JOB_NAME , $BUILD_DISPLAY_NAME",
@@ -55,7 +57,7 @@ pipeline {
                 currentBuild.description = "Release: $release_name"
 
               
-                import java.time.*
+                
 
                 // parse and get epoch
                 start_date_epoch=Date.parse("dd/MM/yyyy'Z'", $params.start_date)
