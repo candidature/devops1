@@ -88,7 +88,12 @@ pipeline {
         
         echo "${params.email}"
         emailext(mimeType: 'text/html', replyTo: "$ADMIN_EMAIL", 
-                 body: """Hello , ${BUILD_USER_EMAIL} <br>
+                 body: """Hello , <br>${BUILD_USER_EMAIL} <br>
+                 <br><br>
+                 We have received your request for VPAT, now as per new process you will be required to start with VPAT testing <br>
+                 and fill the forms. <br>
+                 You can download your project specific VPAT form from : https://ent.box.com/s/1obtcid6ml9zcdfcwzf01g51f3mfme40 <br>
+                 <br>
                  Project name: $params.project_name <br>
                  Release name: $params.release_name <br>
                  <br>
@@ -97,9 +102,8 @@ pipeline {
                  finish_date : $params.finish_date <br>
                  release_date: $params.release_date <br>
                  approvers : $params.approvers <br>
-                 We have received your request for VPAT, now as per new process you will be required to start with VPAT testing <br>
-                 and fill the forms. <br>
-                 You can download your project specific VPAT docs from : https://ent.box.com/s/1obtcid6ml9zcdfcwzf01g51f3mfme40 <br>
+                 VPAT Admin : $env.ADMIN_EMAIL <br>
+                 <br>
                  Thank you! <br>
                  DevOps Team""", 
                  
