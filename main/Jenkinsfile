@@ -1,4 +1,4 @@
-import java.time.*
+import java.text.SimpleDateFormat
 
 def ex(msg, admin, submitter ){
     emailext(mimeType: 'text/html', replyTo: admin, 
@@ -24,7 +24,7 @@ pipeline {
     ADMIN_GROUP = ''
     submitter = ''
     ADMIN_OKTA = 'pg942665'
-    CONVERTOR = 86400
+    CONVERTOR = 86400000
     DAYS = 10
     
   }
@@ -59,8 +59,10 @@ pipeline {
               
                 
 
+                def start_date_epoch = new SimpleDateFormat('dd/MM/yyyy').parse("$params.start_date".trim()).getTime()
+                def finish_date_epoch = new SimpleDateFormat('dd/MM/yyyy').parse("$params.finish_date".trim()).getTime()
                 // parse and get epoch
-                start_date_epoch=Date.parse("dd/MM/yyyy'Z'", $params.start_date)
+                //start_date_epoch=Date.parse("dd/MM/yyyy'Z'", "$params.start_date")
 
                 echo "start_date_epoch : $start_date_epoch"
                 
