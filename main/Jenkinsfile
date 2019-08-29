@@ -54,8 +54,8 @@ pipeline {
                 currentBuild.displayName = "$project_name"
                 currentBuild.description = "Release: $release_name"
                 echo "Days VPAT can be open is : $params.finish_date - $params.start_date"
-                def start_date_epoch = sh(script: 'date +%s -d "$params.start_date"', returnStdout: true)
-                def finish_date_epoch = sh(script: 'date +%s -d "$params.finish_date"', returnStdout: true)
+                def start_date_epoch = sh(script: "date +%s -d "$params.start_date"", returnStdout: true)
+                def finish_date_epoch = sh(script: "date +%s -d "$params.finish_date"", returnStdout: true)
                 echo "Start date: $start_date_epoch"
                 echo "Finish date : $finish_date_epoch"
                 def diff = (start_date_epoch as int) - (finish_date_epoch as int)
