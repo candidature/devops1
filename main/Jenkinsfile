@@ -70,10 +70,15 @@ pipeline {
                 
                 echo "Start date: $start_date_epoch"
                 echo "Finish date : $finish_date_epoch"
-                def diff = (finish_date_epoch as int) - (start_date_epoch as int)
-                env.CALCULATED_DAYS = diff / (env.CONVERTOR as int)
-                
-                echo "DAYS : $env.CALCULATED_DAYS"
+                if (finish_date_epoch < start_date_epoch) {
+                    echo "Finish date is less than start date"
+                    env.CALCULATED_DAYS = "$env.DAYS"
+                    
+                } else {
+                    def diff = (finish_date_epoch as double) - (start_date_epoch as double)
+                    env.CALCULATED_DAYS = (diff / (env.CONVERTOR as double) ) as Integer    
+                    echo "DAYS : $env.CALCULATED_DAYS"
+                }
                 
             }//end script
             }//end wrap
@@ -142,7 +147,7 @@ pipeline {
     stage('VPAT Testing and Writing completed ->  Now proceed for approval, Approve to proceed and Abort to cancel?') {
       steps{
         script {
-        timeout(time:10, unit:'DAYS') {
+        timeout(time: "$env.CALCULATED_DAYS", unit:'DAYS') {
         def userInput = input(
              
                             id: 'Approve1', 
@@ -173,7 +178,7 @@ pipeline {
       }//stage end
       
     
-    stage('VPAT completed by dev, updating testing defects in Rally/JIRA?') {
+    stage('VPAT completed, Update testing defects in Rally/JIRA?') {
       steps{
         script {
         echo "VPAT completed by dev, updating testing defects in Rally/JIRA?"
