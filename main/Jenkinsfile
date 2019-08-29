@@ -223,13 +223,8 @@ pipeline {
           userInput = input(
                     id: 'Approve1', 
                     message: 'Do NOT click unless you already login! Only authorized person shall approve', 
-                    submitterParameter: 'approver' , 
-                    parameters: [
-                      [$class: 'BooleanParameterDefinition', 
-                       defaultValue: true, description: '', name: 'Please confirm you approve this release']])
-          
-     
-          
+                    submitterParameter: 'approver',
+                    submitter: "$ADMIN_OKTA" 
         }//timeout end
         }//script end
       }//step end
@@ -243,7 +238,31 @@ pipeline {
         echo "$ADMIN_EMAIL"
         
         echo "${params.email}"
-        emailext(mimeType: 'text/html', replyTo: 'xxxx',  body: 'Request for VPAT verification', subject: 'VPAT completed - Verification start', to: 'pankaj.gupta@broadcom.com')
+        emailext(mimeType: 'text/html', 
+                 replyTo: "$ADMIN_EMAIL",  
+                 
+                 body: """Hello ,
+                 <br><br>
+                 We are formally closing this VPAT request, 
+                 
+                 You can get completed documents from : $env.vpat_docs  <br>
+                 <br>
+                 Project name: $params.project_name <br>
+                 Release name: $params.release_name <br>
+                 <br>
+                 Variant: $params.variant <br>
+                 start_date : $params.start_date <br>
+                 finish_date : $params.finish_date <br>
+                 release_date: $params.release_date <br>
+                 approvers : $params.approvers <br>
+                 VPAT Admin : $env.ADMIN_EMAIL <br>
+                 <br>
+                 
+                 Thank you! <br>
+                 DevOps Team""", 
+                 
+                 subject: 'VPAT Closure', 
+                 to: 'pankaj.gupta@broadcom.com')
           
         }
       }
