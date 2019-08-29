@@ -71,9 +71,9 @@ pipeline {
                 echo "Start date: $start_date_epoch"
                 echo "Finish date : $finish_date_epoch"
                 def diff = (finish_date_epoch as int) - (start_date_epoch as int)
-                env.DAYS = $diff / $env.CONVERTOR
+                env.CALCULATED_DAYS = diff / (env.CONVERTOR as int)
                 
-                echo "DAYS : $env.DAYS"
+                echo "DAYS : $env.CALCULATED_DAYS"
                 
             }//end script
             }//end wrap
