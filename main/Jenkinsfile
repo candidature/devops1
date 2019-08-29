@@ -222,7 +222,7 @@ pipeline {
         timeout(time:10, unit:'DAYS') {
           userInput = input(
                     id: 'Approve1', 
-                    message: 'Do NOT click unless you already login! Only authorized person shall approve', 
+                    message: 'Do NOT click if you are not sure, proceed to close this VPAT process formally?, Abort to cancel', 
                     submitterParameter: 'approver',
                     submitter: "$ADMIN_OKTA")
         }//timeout end
