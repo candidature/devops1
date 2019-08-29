@@ -144,14 +144,14 @@ pipeline {
     } //end stage
     
     
-    stage('VPAT Testing and Writing completed ->  Now proceed for approval, Approve to proceed and Abort to cancel?') {
+    stage('If VPAT Testing and Writing completed, now proceed for Approval and Abort to cancel?') {
       steps{
         script {
         timeout(time: "$env.CALCULATED_DAYS", unit:'DAYS') {
         def userInput = input(
              
                             id: 'Approve1', 
-                            message: 'Do NOT click unless you already login! Only authorized person shall approve', 
+                            message: 'Please specify a BOX URL where filled documents are uploaded.', 
                             submitter: "$params.approvers" ,
                             submitterParameter: 'approver',
                             parameters: [[
@@ -168,7 +168,8 @@ pipeline {
 //          }
           
          
-            echo "Documents are at this location as per user input: $userInput"
+            echo "Documents are at this location as per user input: $userInput.vpat_docs"
+            env.vpat_docs = "$userInput.vpat_docs"
           
           //vpat_doc = userInput.vpat_docs?:' '
           //echo "VPAT Doc is at : $vpat_doc"
@@ -178,18 +179,43 @@ pipeline {
       }//stage end
       
     
-    stage('VPAT completed, Update testing defects in Rally/JIRA?') {
+    stage('VPAT completed by development, Update testing defects in Rally/JIRA?') {
       steps{
         script {
         echo "VPAT completed by dev, updating testing defects in Rally/JIRA?"
-        emailext(mimeType: 'text/html', replyTo: 'xxxx',  body: 'Request for VPAT verification', subject: 'VPAT completed - Verification start', to: 'pankaj.gupta@broadcom.com')
+        emailext(mimeType: 'text/html', replyTo: "$ADMIN_EMAIL",  
+                 body: 'Request for VPAT verification',
+                 
+                 body: """Hello Admin,
+                 <br><br>
+                 We have received request for VPAT completed, 
+                 
+                 You can get completed documents from : $env.vpat_docs  <br>
+                 <br>
+                 Project name: $params.project_name <br>
+                 Release name: $params.release_name <br>
+                 <br>
+                 Variant: $params.variant <br>
+                 start_date : $params.start_date <br>
+                 finish_date : $params.finish_date <br>
+                 release_date: $params.release_date <br>
+                 approvers : $params.approvers <br>
+                 VPAT Admin : $env.ADMIN_EMAIL <br>
+                 <br>
+                 NEXT STEP: Please click on:  <a href="${BUILD_URL}input"> Proceed to close? </a>
+                 Thank you! <br>
+                 DevOps Team""", 
+                 
+                 
+                 subject: 'VPAT completed - Verification start', 
+                 to: 'pankaj.gupta@broadcom.com')
           
         }
       }
     }
     
     
-    stage('VPAT process completed, proceed to close the process?') {
+    stage('VPAT verification completed, proceed to close the process?') {
       steps{
         script {
             echo "You should close it within 10 days from now else it will automatically timeout"
